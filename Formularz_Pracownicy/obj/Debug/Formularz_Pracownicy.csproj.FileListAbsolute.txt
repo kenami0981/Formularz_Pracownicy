@@ -1,0 +1,15 @@
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\bin\Debug\Formularz_Pracownicy.exe.config
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\bin\Debug\Formularz_Pracownicy.exe
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\bin\Debug\Formularz_Pracownicy.pdb
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\obj\Debug\Formularz_Pracownicy.csproj.AssemblyReference.cache
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\obj\Debug\MainWindow.g.cs
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\obj\Debug\App.g.cs
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\obj\Debug\Formularz_Pracownicy_MarkupCompile.cache
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\obj\Debug\Formularz_Pracownicy_MarkupCompile.lref
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\obj\Debug\MainWindow.baml
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\obj\Debug\Formularz_Pracownicy.g.resources
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\obj\Debug\Formularz_Pracownicy.Properties.Resources.resources
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\obj\Debug\Formularz_Pracownicy.csproj.GenerateResource.cache
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\obj\Debug\Formularz_Pracownicy.csproj.CoreCompileInputs.cache
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\obj\Debug\Formularz_Pracownicy.exe
+C:\Users\HP\Desktop\Programowanie I\WPF\Formularz_Pracownicy\Formularz_Pracownicy\obj\Debug\Formularz_Pracownicy.pdb

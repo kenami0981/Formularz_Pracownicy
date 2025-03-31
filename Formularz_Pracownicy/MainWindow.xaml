@@ -1,0 +1,58 @@
+﻿<Window x:Class="Formularz_Pracownicy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Formularz_Pracownicy"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <Label Content="Imię:"/>
+            <TextBox x:Name="tbx_imie" />
+
+            <Label Content="Nazwisko:"/>
+            <TextBox x:Name="tbx_nazwisko" />
+
+            <Label Content="Data urodzenia:"/>
+            <DatePicker Name="dp_data" />
+
+            <Label Content="Kierunek studiów:"/>
+            <ComboBox x:Name="cb_kierunek">
+                <!--<ComboBoxItem>Matematyka</ComboBoxItem>
+            <ComboBoxItem>Informatyka</ComboBoxItem>
+            <ComboBoxItem>Fizyka</ComboBoxItem>-->
+            </ComboBox>
+
+            <Label Content="Numer albumu:"/>
+            <TextBox x:Name="tbx_id" PreviewTextInput="tbx_id_PreviewTextInput"/>
+
+            <Button x:Name="btn_dodaj" Content="Dodaj" 
+                Background="DarkBlue" Foreground="White"
+                Margin="0 15" Click="btn_dodaj_Click"/>
+            <Button x:Name="btn_edytuj" Content="Edytuj" 
+        Background="DarkRed" Foreground="White"
+        Margin="0 5"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" x:Name="btn_zapisz" Content="Zapisz" 
+            Background="DarkGreen" Foreground="White"
+            Margin="0 5" Click="btn_zapisz_Click"/>
+
+                <Button Grid.Column="1" x:Name="btn_wczytaj" Content="Wczytaj" 
+            Background="DarkOrange" Foreground="White"
+            Margin="0 5" Click="btn_wczytaj_Click"/>
+            </Grid>
+
+        </StackPanel>
+
+        <ListBox x:Name="lb_studenci" Grid.Column="1" />
+    </Grid>
+</Window>
