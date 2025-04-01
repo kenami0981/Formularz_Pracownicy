@@ -1,6 +1,7 @@
-﻿using lab_1.Model;
+﻿using Formularz_Pracownicy.Model;
 using Microsoft.Win32;
-using Microsoft.Win32;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,35 +22,82 @@ namespace Formularz_Pracownicy
     /// </summary>
     public partial class MainWindow : Window
     {
-        private StudyFieldCollection _sfCollection = new StudyFieldCollection();
-        private StudentGroup _group = new StudentGroup("Grupa 1");
+        private TeamCollection _sfCollection = new TeamCollection();
+        private EmployeeGroup _group = new EmployeeGroup("Grupa 1");
         public MainWindow()
         {
             InitializeComponent();
 
             // podpięcie pod cb kierunków studiów
-            cb_kierunek.ItemsSource = _sfCollection;
-            cb_kierunek.DisplayMemberPath = "Name";
+            cb_team.ItemsSource = _sfCollection;
+            cb_team.DisplayMemberPath = "Name";
 
             // podpięcie pod lb studentów z grupy
-            lb_studenci.ItemsSource = _group.Students;
+            lb_pracownicy.ItemsSource = _group.Employee;
         }
 
         private void btn_dodaj_Click(object sender, RoutedEventArgs e)
         {
+            var list = new List<string> { };
+            
+            if (string.IsNullOrEmpty(tbx_imie.Text))
+            {
+                list.Add("Imie");
+            }
+            if (string.IsNullOrEmpty(tbx_nazwisko.Text))
+            {
+                list.Add("Nazwisko");
+            }
+            if (dp_data.SelectedDate == null)
+            {
+                list.Add("Data urodzenia");
+            }
+            if (cb_team.SelectedItem == null)
+            {
+                list.Add("Stanowisko");
+            }
+            if (rb_contract1.IsChecked == false && rb_contract2.IsChecked == false && rb_contract3.IsChecked == false)
+            {
+                list.Add("Typ umowy");
+            }
+            
+            if (string.IsNullOrEmpty(tbx_salary.Text))
+            {
+                list.Add("Pensja");
+            }
+
+           
+            
+                string message = string.Join("\n", list);
             if (string.IsNullOrEmpty(tbx_imie.Text) ||
                 string.IsNullOrEmpty(tbx_nazwisko.Text) ||
-                string.IsNullOrEmpty(tbx_id.Text) ||
-                cb_kierunek.SelectedItem == null ||
-                dp_data.SelectedDate == null)
+                string.IsNullOrEmpty(tbx_salary.Text) ||
+                cb_team.SelectedItem == null ||
+                dp_data.SelectedDate == null ||
+                (rb_contract1.IsChecked==false && rb_contract2.IsChecked == false && rb_contract3.IsChecked == false)
+                ) 
             {
-                MessageBox.Show("Pola muszą być wypełnione", "Błąd",
+                MessageBox.Show("Niewypełnione pola: \n"+message, "Błąd",
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            Student nowyStudent = new Student(tbx_imie.Text, tbx_nazwisko.Text,
-                dp_data.SelectedDate, tbx_id.Text, (StudyField)cb_kierunek.SelectedItem);
+            string selectedContract = "";
+
+            if (rb_contract1.IsChecked == true)
+            {
+                selectedContract = rb_contract1.Content.ToString();
+            }
+            else if (rb_contract2.IsChecked == true)
+            {
+                selectedContract = rb_contract2.Content.ToString();
+            }
+            else if (rb_contract3.IsChecked == true)
+            {
+                selectedContract = rb_contract3.Content.ToString();
+            }
+            Employee nowyStudent = new Employee(tbx_imie.Text, tbx_nazwisko.Text,
+                dp_data.SelectedDate, tbx_salary.Text, (Team)cb_team.SelectedItem, selectedContract);
 
             _group.AddStudent(nowyStudent);
         }
@@ -70,8 +118,19 @@ namespace Formularz_Pracownicy
 
             if (saveFileDialog.ShowDialog() == true)
             {
-                File.WriteAllText(saveFileDialog.FileName, "Przykładowa zawartość pliku.");
-                MessageBox.Show("Plik zapisany pomyślnie!", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Pobranie kolekcji pracowników
+                var employees = lb_pracownicy.ItemsSource as ObservableCollection<Employee>;
+
+                if (employees != null)
+                {
+                    // Tworzenie listy linii do zapisania
+                    List<string> lines = employees.Select(emp => emp.ToString()).ToList();
+
+                    // Zapis do pliku
+                    File.WriteAllLines(saveFileDialog.FileName, lines);
+
+                    MessageBox.Show("Plik zapisany pomyślnie!", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
         }
 

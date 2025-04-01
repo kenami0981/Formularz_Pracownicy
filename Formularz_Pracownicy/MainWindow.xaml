@@ -21,15 +21,18 @@
             <Label Content="Data urodzenia:"/>
             <DatePicker Name="dp_data" />
 
-            <Label Content="Kierunek studiów:"/>
-            <ComboBox x:Name="cb_kierunek">
+            <Label Content="Stanowisko:"/>
+            <ComboBox x:Name="cb_team">
                 <!--<ComboBoxItem>Matematyka</ComboBoxItem>
             <ComboBoxItem>Informatyka</ComboBoxItem>
             <ComboBoxItem>Fizyka</ComboBoxItem>-->
             </ComboBox>
-
-            <Label Content="Numer albumu:"/>
-            <TextBox x:Name="tbx_id" PreviewTextInput="tbx_id_PreviewTextInput"/>
+            <Label Content="Rodzaj umowy"/>
+            <RadioButton x:Name="rb_contract1" GroupName="rb_contract" Content="Umowa na czas nieokreślony"/>
+            <RadioButton x:Name="rb_contract2" GroupName="rb_contract" Content="Umowa na czas określony"/>
+            <RadioButton x:Name="rb_contract3" GroupName="rb_contract" Content="Umowa zlecenie"/>
+            <Label Content="Pensja:"/>
+            <TextBox x:Name="tbx_salary" PreviewTextInput="tbx_id_PreviewTextInput"/>
 
             <Button x:Name="btn_dodaj" Content="Dodaj" 
                 Background="DarkBlue" Foreground="White"
@@ -53,6 +56,6 @@
 
         </StackPanel>
 
-        <ListBox x:Name="lb_studenci" Grid.Column="1" />
+        <ListBox x:Name="lb_pracownicy" Grid.Column="1" />
     </Grid>
 </Window>

@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace lab_1.Model
+namespace Formularz_Pracownicy.Model
 {
-    public class StudyField
+    public class Team
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public StudyField(string name, string description)
+        public Team(string name, string description)
         {
             Name = name;
             Description = description;
         }
 
-        public StudyField() { }
+        public Team() { }
     }
 }
