@@ -1,5 +1,6 @@
 ﻿using Formularz_Pracownicy.Model;
 using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -156,8 +157,60 @@ namespace Formularz_Pracownicy
 
             if (openFileDialog.ShowDialog() == true)
             {
-                string lines = File.ReadAllText(openFileDialog.FileName);
-                MessageBox.Show(lines);
+                try
+                {
+                    List<Employee> loadedEmployees = new List<Employee>();
+
+                    foreach (var line in File.ReadAllLines(openFileDialog.FileName))
+                    {
+                        try
+                        {
+                            // Rozbijamy linijkę na części
+                            string[] parts = line.Split(',');
+
+                            if (parts.Length == 4)
+                            {
+                                // Przetwarzamy imię i nazwisko
+                                string[] nameParts = parts[0].Split(' ');
+                                string firstName = nameParts[0];
+                                string lastName = nameParts[1];
+
+                                // Pobieramy wiek
+                                int age = int.Parse(parts[0].Split(':')[1].TrimEnd(')'));
+
+                                // Pobieramy stanowisko
+                                string position = parts[1].Split(':')[1].Trim();
+
+                                // Pobieramy typ umowy
+                                string contract = parts[2].Split(':')[1].Trim();
+
+                                // Pobieramy pensję
+                                string salary = parts[3].Split(':')[1].Trim();
+
+                                // Tworzymy obiekt Employee
+                                Employee emp = new Employee(firstName, lastName, DateTime.Now.AddYears(-age), salary, new Team(position, $"{position}_Opis"), contract);
+                                loadedEmployees.Add(emp);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Błąd parsowania linii:\n{line}\n\nSzczegóły: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
+
+                    // Czyszczenie aktualnej listy i dodanie nowych pracowników
+                    _group.Employee.Clear();
+                    foreach (var emp in loadedEmployees)
+                    {
+                        _group.Employee.Add(emp);
+                    }
+
+                    MessageBox.Show("Dane zostały wczytane pomyślnie!", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Błąd podczas wczytywania pliku: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
         private void btn_edytuj_Click(object sender, RoutedEventArgs e) {
