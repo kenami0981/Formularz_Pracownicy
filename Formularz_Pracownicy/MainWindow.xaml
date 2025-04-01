@@ -39,7 +39,7 @@
                 Margin="0 15" Click="btn_dodaj_Click"/>
             <Button x:Name="btn_edytuj" Content="Edytuj" 
         Background="DarkRed" Foreground="White"
-        Margin="0 5"/>
+        Margin="0 5" Click="btn_edytuj_Click"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>

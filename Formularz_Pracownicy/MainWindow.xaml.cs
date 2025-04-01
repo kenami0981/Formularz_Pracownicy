@@ -100,6 +100,18 @@ namespace Formularz_Pracownicy
                 dp_data.SelectedDate, tbx_salary.Text, (Team)cb_team.SelectedItem, selectedContract);
 
             _group.AddStudent(nowyStudent);
+            clear_fields();
+            
+        }
+        private void clear_fields() {
+            tbx_imie.Text = "";
+            tbx_nazwisko.Text = "";
+            dp_data.SelectedDate = null;
+            tbx_salary.Text = "";
+            rb_contract1.IsChecked=false;
+            rb_contract3.IsChecked = false;
+            rb_contract2.IsChecked = false;
+            cb_team.Text = null;
         }
 
         private void tbx_id_PreviewTextInput(object sender,
@@ -147,6 +159,9 @@ namespace Formularz_Pracownicy
                 string lines = File.ReadAllText(openFileDialog.FileName);
                 MessageBox.Show(lines);
             }
+        }
+        private void btn_edytuj_Click(object sender, RoutedEventArgs e) {
+            clear_fields();
         }
     }
 }
