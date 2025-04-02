@@ -56,6 +56,6 @@
 
         </StackPanel>
 
-        <ListBox x:Name="lb_pracownicy" Grid.Column="1" />
+        <ListBox x:Name="lb_pracownicy" Grid.Column="1" SelectionChanged="btn_employee_Click"/>
     </Grid>
 </Window>

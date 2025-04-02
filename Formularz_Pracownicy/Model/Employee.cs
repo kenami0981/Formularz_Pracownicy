@@ -10,8 +10,8 @@ namespace Formularz_Pracownicy.Model
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime? BirthDate { get; private set; }
-        public string Salary { get; private set; }
+        public DateTime? BirthDate { get; set; }
+        public string Salary { get; set; }
 
         public string Contract { get; set; }
         public Team Team1 { get; set; }

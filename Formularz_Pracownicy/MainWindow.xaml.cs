@@ -25,6 +25,8 @@ namespace Formularz_Pracownicy
     {
         private TeamCollection _sfCollection = new TeamCollection();
         private EmployeeGroup _group = new EmployeeGroup("Grupa 1");
+        private Employee _editingEmployee = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -39,8 +41,31 @@ namespace Formularz_Pracownicy
 
         private void btn_dodaj_Click(object sender, RoutedEventArgs e)
         {
+            validate();
+            string selectedContract = "";
+
+            if (rb_contract1.IsChecked == true)
+            {
+                selectedContract = rb_contract1.Content.ToString();
+            }
+            else if (rb_contract2.IsChecked == true)
+            {
+                selectedContract = rb_contract2.Content.ToString();
+            }
+            else if (rb_contract3.IsChecked == true)
+            {
+                selectedContract = rb_contract3.Content.ToString();
+            }
+            //MessageBox.Show(_editingEmployee.ToString());
+            Employee nowyPracownik = new Employee(tbx_imie.Text, tbx_nazwisko.Text,
+                    dp_data.SelectedDate, tbx_salary.Text, (Team)cb_team.SelectedItem, selectedContract);
+
+            _group.AddEmployee(nowyPracownik);
+            clear_fields();
+
+        }
+        private void validate() {
             var list = new List<string> { };
-            
             if (string.IsNullOrEmpty(tbx_imie.Text))
             {
                 list.Add("Imie");
@@ -61,55 +86,37 @@ namespace Formularz_Pracownicy
             {
                 list.Add("Typ umowy");
             }
-            
+
             if (string.IsNullOrEmpty(tbx_salary.Text))
             {
                 list.Add("Pensja");
             }
 
-           
-            
-                string message = string.Join("\n", list);
+
+
+            string message = string.Join("\n", list);
             if (string.IsNullOrEmpty(tbx_imie.Text) ||
                 string.IsNullOrEmpty(tbx_nazwisko.Text) ||
                 string.IsNullOrEmpty(tbx_salary.Text) ||
                 cb_team.SelectedItem == null ||
                 dp_data.SelectedDate == null ||
-                (rb_contract1.IsChecked==false && rb_contract2.IsChecked == false && rb_contract3.IsChecked == false)
-                ) 
+                (rb_contract1.IsChecked == false && rb_contract2.IsChecked == false && rb_contract3.IsChecked == false)
+                )
             {
-                MessageBox.Show("Niewypełnione pola: \n"+message, "Błąd",
+                MessageBox.Show("Niewypełnione pola: \n" + message, "Błąd",
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            string selectedContract = "";
-
-            if (rb_contract1.IsChecked == true)
-            {
-                selectedContract = rb_contract1.Content.ToString();
-            }
-            else if (rb_contract2.IsChecked == true)
-            {
-                selectedContract = rb_contract2.Content.ToString();
-            }
-            else if (rb_contract3.IsChecked == true)
-            {
-                selectedContract = rb_contract3.Content.ToString();
-            }
-            Employee nowyStudent = new Employee(tbx_imie.Text, tbx_nazwisko.Text,
-                dp_data.SelectedDate, tbx_salary.Text, (Team)cb_team.SelectedItem, selectedContract);
-
-            _group.AddStudent(nowyStudent);
-            clear_fields();
             
         }
-        private void clear_fields() {
+        private void clear_fields()
+        {
             tbx_imie.Text = "";
             tbx_nazwisko.Text = "";
             dp_data.SelectedDate = null;
             tbx_salary.Text = "";
-            rb_contract1.IsChecked=false;
+            rb_contract1.IsChecked = false;
             rb_contract3.IsChecked = false;
             rb_contract2.IsChecked = false;
             cb_team.Text = null;
@@ -214,7 +221,64 @@ namespace Formularz_Pracownicy
             }
         }
         private void btn_edytuj_Click(object sender, RoutedEventArgs e) {
+            if (lb_pracownicy.SelectedItem is Employee selectedEmployee)
+            {
+                validate();
+                string selectedContract = "";
+
+                if (rb_contract1.IsChecked == true)
+                {
+                    selectedContract = rb_contract1.Content.ToString();
+                }
+                else if (rb_contract2.IsChecked == true)
+                {
+                    selectedContract = rb_contract2.Content.ToString();
+                }
+                else if (rb_contract3.IsChecked == true)
+                {
+                    selectedContract = rb_contract3.Content.ToString();
+                }
+                _group.UpdateEmployee(
+            selectedEmployee,
+            tbx_imie.Text,
+            tbx_nazwisko.Text,
+            dp_data.SelectedDate,
+            tbx_salary.Text,
+            (Team)cb_team.SelectedItem,
+            selectedContract
+        );
+                lb_pracownicy.Items.Refresh();
+
+            }
+        }
+        private void btn_employee_Click(object sender, RoutedEventArgs e)
+        {
             clear_fields();
+            if (lb_pracownicy.SelectedItem is Employee selectedEmployee)
+            {
+                _editingEmployee = selectedEmployee;
+                // Wypełnienie pól formularza danymi zaznaczonego pracownika
+                tbx_imie.Text = selectedEmployee.FirstName;
+                tbx_nazwisko.Text = selectedEmployee.LastName;
+                dp_data.SelectedDate = selectedEmployee.BirthDate;
+                tbx_salary.Text = selectedEmployee.Salary;
+                cb_team.SelectedItem = _sfCollection.FirstOrDefault(t => t.Name == selectedEmployee.Team1.Name);
+
+
+
+
+                if (selectedEmployee.Contract == "Umowa zlecenie") {
+                    rb_contract3.IsChecked = true;
+                }
+                else if (selectedEmployee.Contract =="Umowa na czas określony") {
+                    rb_contract2.IsChecked = true;
+                }
+                else if (selectedEmployee.Contract == "Umowa na czas nieokreślony")
+                {
+                    rb_contract1.IsChecked = true;
+                }
+
+            }
         }
     }
 }
