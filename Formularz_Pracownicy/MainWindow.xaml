@@ -13,10 +13,10 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
             <Label Content="Imię:"/>
-            <TextBox x:Name="tbx_imie" />
+            <TextBox x:Name="tbx_imie" PreviewTextInput="tbx_name_PreviewTextInput"/>
 
             <Label Content="Nazwisko:"/>
-            <TextBox x:Name="tbx_nazwisko" />
+            <TextBox x:Name="tbx_nazwisko" PreviewTextInput="tbx_name_PreviewTextInput"/>
 
             <Label Content="Data urodzenia:"/>
             <DatePicker Name="dp_data" />
@@ -32,7 +32,7 @@
             <RadioButton x:Name="rb_contract2" GroupName="rb_contract" Content="Umowa na czas określony"/>
             <RadioButton x:Name="rb_contract3" GroupName="rb_contract" Content="Umowa zlecenie"/>
             <Label Content="Pensja:"/>
-            <TextBox x:Name="tbx_salary" PreviewTextInput="tbx_id_PreviewTextInput"/>
+            <TextBox x:Name="tbx_salary" PreviewTextInput="tbx_salary_PreviewTextInput"/>
 
             <Button x:Name="btn_dodaj" Content="Dodaj" 
                 Background="DarkBlue" Foreground="White"

@@ -106,9 +106,7 @@ namespace Formularz_Pracownicy
                 MessageBox.Show("Niewypełnione pola: \n" + message, "Błąd",
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
-            }
-
-            
+            }   
         }
         private void clear_fields()
         {
@@ -122,10 +120,18 @@ namespace Formularz_Pracownicy
             cb_team.Text = null;
         }
 
-        private void tbx_id_PreviewTextInput(object sender,
+        private void tbx_salary_PreviewTextInput(object sender,
             TextCompositionEventArgs e)
         {
-            e.Handled = !e.Text.All(char.IsDigit);
+            TextBox textBox = sender as TextBox;
+            bool isLeadingZero = textBox.Text.Length == 0 && e.Text == "0";
+            // Zablokowanie wpisywania jeżeli jest to pierwsza cyfra i jest równa "0"
+            e.Handled = !e.Text.All(char.IsDigit) || isLeadingZero || e.Text.StartsWith(",");
+        }
+        private void tbx_name_PreviewTextInput(object sender,
+            TextCompositionEventArgs e)
+        {
+            e.Handled = e.Text.All(char.IsDigit);
         }
 
         private void btn_zapisz_Click(object sender, RoutedEventArgs e)
@@ -239,14 +245,14 @@ namespace Formularz_Pracownicy
                     selectedContract = rb_contract3.Content.ToString();
                 }
                 _group.UpdateEmployee(
-            selectedEmployee,
-            tbx_imie.Text,
-            tbx_nazwisko.Text,
-            dp_data.SelectedDate,
-            tbx_salary.Text,
-            (Team)cb_team.SelectedItem,
-            selectedContract
-        );
+                    selectedEmployee,
+                    tbx_imie.Text,
+                    tbx_nazwisko.Text,
+                    dp_data.SelectedDate,
+                    tbx_salary.Text,
+                    (Team)cb_team.SelectedItem,
+                    selectedContract
+                );
                 lb_pracownicy.Items.Refresh();
 
             }
