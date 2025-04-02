@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Formularz_Pracownicy"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="460" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -36,10 +36,13 @@
 
             <Button x:Name="btn_dodaj" Content="Dodaj" 
                 Background="DarkBlue" Foreground="White"
-                Margin="0 15" Click="btn_dodaj_Click"/>
+                Margin="0 5" Click="btn_dodaj_Click"/>
             <Button x:Name="btn_edytuj" Content="Edytuj" 
         Background="DarkRed" Foreground="White"
         Margin="0 5" Click="btn_edytuj_Click"/>
+            <Button x:Name="btn_usun" Content="Usuń" 
+        Background="Gray" Foreground="White"
+        Margin="0 5" Click="btn_usun_Click"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>

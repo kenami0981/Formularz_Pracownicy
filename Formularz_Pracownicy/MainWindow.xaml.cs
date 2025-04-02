@@ -41,7 +41,7 @@ namespace Formularz_Pracownicy
 
         private void btn_dodaj_Click(object sender, RoutedEventArgs e)
         {
-            validate();
+            if (validate()==false) return;
             string selectedContract = "";
 
             if (rb_contract1.IsChecked == true)
@@ -64,7 +64,7 @@ namespace Formularz_Pracownicy
             clear_fields();
 
         }
-        private void validate() {
+        private bool validate() {
             var list = new List<string> { };
             if (string.IsNullOrEmpty(tbx_imie.Text))
             {
@@ -91,10 +91,14 @@ namespace Formularz_Pracownicy
             {
                 list.Add("Pensja");
             }
+            if (dp_data.SelectedDate.HasValue && dp_data.SelectedDate.Value > DateTime.Today)
+            {
+                MessageBox.Show("Data urodzenia nie może być w przyszłości.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                dp_data.SelectedDate = DateTime.Today; 
+            }
+            else { return false; }
 
-
-
-            string message = string.Join("\n", list);
+                string message = string.Join("\n", list);
             if (string.IsNullOrEmpty(tbx_imie.Text) ||
                 string.IsNullOrEmpty(tbx_nazwisko.Text) ||
                 string.IsNullOrEmpty(tbx_salary.Text) ||
@@ -105,8 +109,10 @@ namespace Formularz_Pracownicy
             {
                 MessageBox.Show("Niewypełnione pola: \n" + message, "Błąd",
                     MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                return false;
+
             }   
+            return true;
         }
         private void clear_fields()
         {
@@ -123,17 +129,27 @@ namespace Formularz_Pracownicy
         private void tbx_salary_PreviewTextInput(object sender,
             TextCompositionEventArgs e)
         {
+            
             TextBox textBox = sender as TextBox;
+            // Sprawdzenie, czy próbujemy wpisać liczbę zmiennoprzecinkową z kropką
             bool isLeadingZero = textBox.Text.Length == 0 && e.Text == "0";
-            // Zablokowanie wpisywania jeżeli jest to pierwsza cyfra i jest równa "0"
-            e.Handled = !e.Text.All(char.IsDigit) || isLeadingZero || e.Text.StartsWith(",");
+            bool isDecimalPoint = e.Text == "."; // Akceptujemy tylko kropkę jako separator dziesiętny
+
+            // Walidacja: liczba musi być cyfrą, nie może zaczynać się od 0, i kropka jest dozwolona tylko raz
+            e.Handled = !e.Text.All(char.IsDigit) && !isDecimalPoint || isLeadingZero ||
+                        (textBox.Text.Contains(".") && isDecimalPoint);
         }
         private void tbx_name_PreviewTextInput(object sender,
             TextCompositionEventArgs e)
         {
             e.Handled = e.Text.All(char.IsDigit);
         }
-
+        private void btn_usun_Click(object sender, RoutedEventArgs e) {
+            if (lb_pracownicy.SelectedItem is Employee selectedEmployee)
+            {
+                _group.RemoveEmployee(selectedEmployee);
+            }
+            }
         private void btn_zapisz_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog
@@ -229,7 +245,7 @@ namespace Formularz_Pracownicy
         private void btn_edytuj_Click(object sender, RoutedEventArgs e) {
             if (lb_pracownicy.SelectedItem is Employee selectedEmployee)
             {
-                validate();
+                if (validate() == false) return;
                 string selectedContract = "";
 
                 if (rb_contract1.IsChecked == true)
